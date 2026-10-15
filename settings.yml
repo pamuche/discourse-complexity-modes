@@ -1,0 +1,148 @@
+default_level:
+  type: enum
+  default: "2"
+  choices:
+    - "1"
+    - "2"
+    - "3"
+
+allow_user_customization:
+  type: bool
+  default: true
+
+show_for_anonymous:
+  type: bool
+  default: false
+
+# min_level "2": hidden in Fokus, visible from Standard on
+# min_level "3": hidden in Fokus and Standard, visible only in Alles
+default_rules:
+  type: objects
+  schema:
+    name: rule
+    identifier: label
+    properties:
+      label:
+        type: string
+        required: true
+      selector:
+        type: string
+        required: true
+      min_level:
+        type: enum
+        choices: ["2", "3"]
+        default: "2"
+      enabled:
+        type: boolean
+        default: true
+  default:
+    # --- hidden in Fokus ---------------------------------------------------
+    - label: "Seitenleiste"
+      selector: ".sidebar-wrapper, .header-sidebar-toggle"
+      min_level: "2"
+    - label: "Hamburger-Menü"
+      selector: ".d-header-icons .hamburger-dropdown"
+      min_level: "2"
+    - label: "habiDAT App-Menü"
+      selector: ".habidat-dropdown"
+      min_level: "2"
+    - label: "Suche im Header"
+      selector: ".d-header-icons .search-dropdown, .floating-search-input-wrapper"
+      min_level: "2"
+    - label: "Chat-Symbol"
+      selector: ".chat-header-icon"
+      min_level: "2"
+    - label: "Kategorie-/Schlagwort-Dropdowns"
+      selector: ".category-breadcrumb"
+      min_level: "2"
+    - label: "Kategorie-Benachrichtigung & -Bearbeiten"
+      selector: ".navigation-controls .category-notifications-button, .navigation-controls .tag-notifications-button, .navigation-controls .edit-category"
+      min_level: "2"
+    - label: "Banner & Hinweise"
+      selector: "#banner, .global-notice, .welcome-banner, .custom-search-banner"
+      min_level: "2"
+    - label: "Themenliste: Beteiligte"
+      selector: ".topic-list .posters"
+      min_level: "2"
+    - label: "Themenliste: Schlagwörter"
+      selector: ".topic-list .discourse-tags"
+      min_level: "2"
+    - label: "Zeitleiste / Themen-Navigation"
+      selector: ".topic-navigation"
+      min_level: "2"
+    - label: "Themen-Übersicht (Statistik, Links)"
+      selector: ".topic-map"
+      min_level: "2"
+    - label: "Ähnliche / vorgeschlagene Themen"
+      selector: ".more-topics__container"
+      min_level: "2"
+    - label: "Themen-Fußleiste: Zusatzbuttons"
+      selector: ".topic-footer-main-buttons__actions, .notifications-button-footer, .topic-notifications-button"
+      min_level: "2"
+    - label: "Beitrag: Teilen / Link kopieren"
+      selector: ".post-action-menu__share, .post-action-menu__copy-link"
+      min_level: "2"
+    - label: "Beitrag: Lesezeichen"
+      selector: ".post-action-menu__bookmark"
+      min_level: "2"
+    - label: "Beitrag: Melden"
+      selector: ".post-action-menu__flag"
+      min_level: "2"
+    - label: "Beitrag: Mehr-Menü (…)"
+      selector: ".post-action-menu__show-more"
+      min_level: "2"
+    - label: "Beitrag: Linkliste unter Beiträgen"
+      selector: ".post-links-container"
+      min_level: "2"
+    - label: "Themen-Ereignisse (angeheftet, geschlossen …)"
+      selector: ".small-action"
+      min_level: "2"
+    - label: "Editor: Antwort-Typ-Menü"
+      selector: ".composer-action-title .composer-actions"
+      min_level: "2"
+    - label: "Editor: Formatierungsleiste"
+      selector: ".d-editor-button-bar"
+      min_level: "2"
+      enabled: false
+    # --- hidden in Fokus + Standard ---------------------------------------
+    - label: "Themenliste: Aufrufe & Likes"
+      selector: ".topic-list .views, .topic-list .likes, .topic-list .op-likes"
+      min_level: "3"
+    - label: "Themenliste: Mehrfachauswahl"
+      selector: "button.bulk-select, .topic-list .bulk-select"
+      min_level: "3"
+    - label: "Farbschema-Umschalter"
+      selector: ".header-color-scheme-toggle"
+      min_level: "3"
+    - label: "Moderation: Themen-Werkzeuge"
+      selector: ".topic-admin-menu-button-container, .topic-admin-menu-button"
+      min_level: "3"
+    - label: "Moderation: Beitrags-Werkzeuge"
+      selector: ".post-action-menu__admin"
+      min_level: "3"
+    - label: "Beitrag: Gelesen-Zähler"
+      selector: ".post-action-menu__read"
+      min_level: "3"
+    - label: "Zuweisen (discourse-assign)"
+      selector: "#topic-footer-button-assign, .assigned-to, .post-action-menu__assign"
+      min_level: "3"
+
+custom_css_level_1:
+  type: string
+  textarea: true
+  default: |-
+    /* Seitenleiste ist ausgeblendet: Inhalt über volle Breite */
+    #main-outlet-wrapper {
+      grid-template-columns: minmax(0, 1fr) !important;
+      gap: 0 !important;
+    }
+
+custom_css_level_2:
+  type: string
+  textarea: true
+  default: ""
+
+custom_css_level_3:
+  type: string
+  textarea: true
+  default: ""

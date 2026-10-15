@@ -1,0 +1,59 @@
+en:
+  theme_metadata:
+    description: "Selectable UI complexity levels (Focus / Standard / Full)."
+    settings:
+      default_level: "Level for people who haven't picked one yet (1 = Focus, 2 = Standard, 3 = Full)."
+      allow_user_customization: "Let users customize the rules for themselves (stored in the browser)."
+      show_for_anonymous: "Show the switcher to anonymous visitors too."
+      default_rules: "Hide rules. Min level 2 = hidden in Focus, 3 = hidden in Focus and Standard."
+      custom_css_level_1: "Extra CSS applied only in Focus."
+      custom_css_level_2: "Extra CSS applied only in Standard."
+      custom_css_level_3: "Extra CSS applied only in Full."
+  complexity_modes:
+    switcher_title: "View: %{level}"
+    customize: "Customize …"
+    levels:
+      focus: "Focus"
+      standard: "Standard"
+      full: "Full"
+    descriptions:
+      focus: "Just reading and writing, no distractions"
+      standard: "With navigation, search and sidebar"
+      full: "All features and buttons"
+    config:
+      title: "Customize view"
+      intro: "Each rule hides elements (CSS selector, e.g. .class or #id) below a level. Changes preview immediately and are applied with “Save”."
+      preview: "Preview:"
+      section_2:
+        title: "Visible from Standard"
+        hint: "Hidden in Focus."
+      section_3:
+        title: "Visible only in Full"
+        hint: "Hidden in Focus and Standard."
+      enabled: "Rule enabled"
+      label: "Label"
+      status:
+        invalid: "invalid"
+        hides_switcher: "would hide the switcher"
+        matches:
+          one: "%{count} match"
+          other: "%{count} matches"
+      move_up: "Move up"
+      move_down: "Move down"
+      move_to_3: "Show only in “Full”"
+      move_to_2: "Show from “Standard”"
+      delete: "Delete rule"
+      add: "Add rule"
+      pick: "Pick element"
+      picked_label: "Picked element"
+      custom_css: "Custom CSS per level"
+      custom_css_hint: "Applied only in the respective level."
+      transfer: "Export / Import"
+      transfer_hint: "Copy your settings as JSON to paste them on another device or hand them to an admin as the new default."
+      export: "Export"
+      import: "Import"
+      import_error: "Import failed: %{message}"
+      save: "Save"
+      cancel: "Cancel"
+      reset: "Reset to defaults"
+      reset_confirm: "Discard your own rules and use the forum defaults?"

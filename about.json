@@ -1,0 +1,9 @@
+{
+  "name": "Komplexitätsstufen (Complexity Modes)",
+  "component": true,
+  "about_url": "https://treff.syndikat.org/",
+  "license_url": "https://www.gnu.org/licenses/gpl-3.0.html",
+  "modifiers": {
+    "svg_icons": ["feather"]
+  }
+}

@@ -1,0 +1,59 @@
+de:
+  theme_metadata:
+    description: "Wählbare Komplexitätsstufen (Fokus / Standard / Alles) für die Oberfläche."
+    settings:
+      default_level: "Standardstufe für alle, die noch nichts gewählt haben (1 = Fokus, 2 = Standard, 3 = Alles)."
+      allow_user_customization: "Nutzer*innen dürfen die Regeln für sich selbst anpassen (gespeichert im Browser)."
+      show_for_anonymous: "Umschalter auch für nicht angemeldete Besucher*innen anzeigen."
+      default_rules: "Ausblende-Regeln. Mindeststufe 2 = in Fokus ausgeblendet, 3 = in Fokus und Standard ausgeblendet."
+      custom_css_level_1: "Zusätzliches CSS, das nur in Fokus gilt."
+      custom_css_level_2: "Zusätzliches CSS, das nur in Standard gilt."
+      custom_css_level_3: "Zusätzliches CSS, das nur in Alles gilt."
+  complexity_modes:
+    switcher_title: "Ansicht: %{level}"
+    customize: "Anpassen …"
+    levels:
+      focus: "Fokus"
+      standard: "Standard"
+      full: "Alles"
+    descriptions:
+      focus: "Nur lesen und schreiben, ohne Ablenkung"
+      standard: "Mit Navigation, Suche und Seitenleiste"
+      full: "Alle Funktionen und Buttons"
+    config:
+      title: "Ansicht anpassen"
+      intro: "Jede Regel blendet Elemente (CSS-Selektor, z. B. .klasse oder #id) unterhalb einer Stufe aus. Änderungen sind sofort sichtbar und werden erst mit „Speichern“ übernommen."
+      preview: "Vorschau:"
+      section_2:
+        title: "Ab Standard sichtbar"
+        hint: "In Fokus ausgeblendet."
+      section_3:
+        title: "Nur in Alles sichtbar"
+        hint: "In Fokus und Standard ausgeblendet."
+      enabled: "Regel aktiv"
+      label: "Bezeichnung"
+      status:
+        invalid: "ungültig"
+        hides_switcher: "würde den Umschalter verstecken"
+        matches:
+          one: "%{count} Treffer"
+          other: "%{count} Treffer"
+      move_up: "Nach oben"
+      move_down: "Nach unten"
+      move_to_3: "Erst in „Alles“ zeigen"
+      move_to_2: "Schon in „Standard“ zeigen"
+      delete: "Regel löschen"
+      add: "Regel hinzufügen"
+      pick: "Element auswählen"
+      picked_label: "Ausgewähltes Element"
+      custom_css: "Eigenes CSS pro Stufe"
+      custom_css_hint: "Wird nur in der jeweiligen Stufe angewendet."
+      transfer: "Export / Import"
+      transfer_hint: "Einstellungen als JSON kopieren, um sie auf einem anderen Gerät einzufügen oder einer Admin-Person als neuen Standard zu geben."
+      export: "Exportieren"
+      import: "Importieren"
+      import_error: "Import fehlgeschlagen: %{message}"
+      save: "Speichern"
+      cancel: "Abbrechen"
+      reset: "Auf Standard zurücksetzen"
+      reset_confirm: "Eigene Regeln verwerfen und die Vorgaben des Forums verwenden?"
