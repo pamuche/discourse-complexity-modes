@@ -37,13 +37,9 @@ default_rules:
         default: true
   default:
     # --- hidden in Fokus ---------------------------------------------------
-    # Fokus keeps a slim sidebar: Kategorien, Unterhaltungen (group inboxes)
-    # and the "Gruppen" link from Community.
-    - label: "Seitenleiste: übrige Bereiche (außer Kategorien/Community/Unterhaltungen)"
-      selector: '.sidebar-section[data-section-name]:not([data-section-name="categories"], [data-section-name="community"], [data-section-name="inbox-section"])'
-      min_level: "2"
-    - label: "Seitenleiste: Community-Links außer Gruppen"
-      selector: '.sidebar-section[data-section-name="community"] .sidebar-section-link-wrapper:not(:has([data-link-name="groups"])), .sidebar-section[data-section-name="community"] .sidebar-more-section-links-details'
+    # Fokus keeps a slim sidebar: Kategorien + Unterhaltungen (group inboxes).
+    - label: "Seitenleiste: übrige Bereiche (außer Kategorien/Unterhaltungen)"
+      selector: '.sidebar-section[data-section-name]:not([data-section-name="categories"], [data-section-name="inbox-section"])'
       min_level: "2"
     - label: "Seitenleiste: Bereichs-Buttons (Bearbeiten …)"
       selector: ".sidebar-section-header-button, .sidebar-section-header-caret"

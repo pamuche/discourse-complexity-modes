@@ -39,7 +39,7 @@ acceptance("Complexity modes | logged in", function (needs) {
     assert.strictEqual(JSON.parse(localStorage.getItem(STORAGE_KEY)).level, 1);
   });
 
-  test("Fokus keeps categories in the sidebar, hides the rest", async function (assert) {
+  test("Fokus keeps categories and inboxes in the sidebar, hides the rest", async function (assert) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ version: 1, level: 1 }));
     await visit("/");
     assert.strictEqual(level(), "1");
@@ -50,7 +50,7 @@ acceptance("Complexity modes | logged in", function (needs) {
       )
     );
     assert.false(css.includes(":is(.sidebar-wrapper"));
-    assert.true(css.includes('[data-link-name="groups"]'));
+    assert.false(css.includes('[data-link-name="groups"]'));
   });
 
   test("never hides the switcher itself", async function (assert) {
