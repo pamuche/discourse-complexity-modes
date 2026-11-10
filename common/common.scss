@@ -4,9 +4,19 @@
   min-width: 16rem;
 
   &__level {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75em;
     width: 100%;
     justify-content: flex-start;
     text-align: left;
+    white-space: normal;
+
+    .d-icon {
+      position: static;
+      flex: 0 0 auto;
+      margin: 0.2em 0 0;
+    }
 
     &.--current {
       background: var(--d-selected);
@@ -19,7 +29,9 @@
 
   &__text {
     display: flex;
+    flex: 1 1 auto;
     flex-direction: column;
+    min-width: 0;
   }
 
   &__description {

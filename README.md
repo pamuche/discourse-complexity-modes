@@ -4,7 +4,7 @@ Adds a switcher next to the account icon (top right) with three UI levels:
 
 | Level | Name | What you see |
 |---|---|---|
-| 1 | **Fokus** | Topic lists, reading, replying, new topic. Slim sidebar (only categories + groups), no dropdowns, timeline, extra buttons. |
+| 1 | **Fokus** | Topic lists, reading, replying, new topic. Slim sidebar (categories, groups, group inboxes), no dropdowns, timeline, extra buttons. |
 | 2 | **Standard** | Plus full sidebar, navigation dropdowns, search, post/topic extras. |
 | 3 | **Alles** | Stock Discourse, nothing hidden. |
 
