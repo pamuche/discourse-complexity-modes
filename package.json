@@ -1,0 +1,23 @@
+{
+  "name": "discourse-complexity-modes",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "pnpm lint:js && pnpm lint:css && pnpm lint:hbs && pnpm lint:prettier",
+    "lint:js": "eslint --no-error-on-unmatched-pattern {javascripts,test,tests-node}",
+    "lint:css": "stylelint --allow-empty-input \"**/*.scss\"",
+    "lint:hbs": "ember-template-lint --no-error-on-unmatched-pattern javascripts",
+    "lint:prettier": "prettier --check \"{javascripts,test,tests-node,common}/**/*.{js,gjs,scss}\"",
+    "lint:fix": "eslint --fix --no-error-on-unmatched-pattern {javascripts,test,tests-node} && stylelint --fix --allow-empty-input \"**/*.scss\" && prettier --write \"{javascripts,test,tests-node,common}/**/*.{js,gjs,scss}\"",
+    "test:unit": "node --test tests-node/*.test.mjs",
+    "check": "pnpm test:unit && pnpm lint"
+  },
+  "devDependencies": {
+    "@discourse/lint-configs": "^2.0.0",
+    "ember-template-lint": "^7.0.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0",
+    "stylelint": "^16.0.0"
+  },
+  "engines": { "node": ">= 22" }
+}

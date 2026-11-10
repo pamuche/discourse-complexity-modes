@@ -1,6 +1,5 @@
 // Styles for the switcher and config dialog only.
 // The hide rules themselves are generated at runtime from the settings.
-
 .complexity-modes-menu {
   min-width: 16rem;
 
@@ -149,7 +148,7 @@
     opacity: 0.55;
   }
 
-  @media (max-width: 40rem) {
+  @media (width <= 40rem) {
     grid-template-columns: auto 1fr;
 
     .complexity-modes-rule__selector,
@@ -175,5 +174,5 @@ html.complexity-modes-picking {
   z-index: 100000;
   pointer-events: none;
   outline: 2px solid var(--tertiary);
-  background: rgba(var(--tertiary-rgb), 0.15);
+  background: rgb(var(--tertiary-rgb), 0.15);
 }

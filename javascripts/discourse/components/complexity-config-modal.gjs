@@ -250,13 +250,13 @@ export default class ComplexityConfigModal extends Component {
           {{/each}}
         </div>
 
-        {{#each this.sections as |section|}}
+        {{#each this.sections as |group|}}
           <section class="complexity-modes-config__section">
-            <h3>{{section.title}}</h3>
-            <p class="complexity-modes-config__hint">{{section.hint}}</p>
+            <h3>{{group.title}}</h3>
+            <p class="complexity-modes-config__hint">{{group.hint}}</p>
 
             <ul class="complexity-modes-config__rules">
-              {{#each section.rules key="id" as |item|}}
+              {{#each group.rules key="id" as |item|}}
                 <li
                   class={{concatClass
                     "complexity-modes-rule"
@@ -316,12 +316,12 @@ export default class ComplexityConfigModal extends Component {
                     <DButton
                       class="btn-flat btn-small"
                       @icon={{if
-                        (eq section.minLevel 2)
+                        (eq group.minLevel 2)
                         "arrow-right"
                         "arrow-left"
                       }}
                       @title={{if
-                        (eq section.minLevel 2)
+                        (eq group.minLevel 2)
                         (themePrefix "complexity_modes.config.move_to_3")
                         (themePrefix "complexity_modes.config.move_to_2")
                       }}
@@ -343,13 +343,13 @@ export default class ComplexityConfigModal extends Component {
                 class="btn-default btn-small"
                 @icon="plus"
                 @label={{themePrefix "complexity_modes.config.add"}}
-                @action={{fn this.add section.minLevel "" ""}}
+                @action={{fn this.add group.minLevel "" ""}}
               />
               <DButton
                 class="btn-default btn-small"
                 @icon="crosshairs"
                 @label={{themePrefix "complexity_modes.config.pick"}}
-                @action={{fn this.pick section.minLevel}}
+                @action={{fn this.pick group.minLevel}}
               />
             </div>
           </section>
