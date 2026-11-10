@@ -39,12 +39,18 @@ acceptance("Complexity modes | logged in", function (needs) {
     assert.strictEqual(JSON.parse(localStorage.getItem(STORAGE_KEY)).level, 1);
   });
 
-  test("Fokus hides the sidebar via generated CSS", async function (assert) {
+  test("Fokus keeps categories in the sidebar, hides the rest", async function (assert) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ version: 1, level: 1 }));
     await visit("/");
     assert.strictEqual(level(), "1");
     const css = document.getElementById("complexity-modes-css").textContent;
-    assert.true(css.includes('html[data-complexity="1"] :is(.sidebar-wrapper'));
+    assert.true(
+      css.includes(
+        'html[data-complexity="1"] :is(.sidebar-section[data-section-name]:not('
+      )
+    );
+    assert.false(css.includes(":is(.sidebar-wrapper"));
+    assert.true(css.includes('[data-link-name="groups"]'));
   });
 
   test("never hides the switcher itself", async function (assert) {

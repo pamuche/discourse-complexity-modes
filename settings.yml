@@ -37,8 +37,18 @@ default_rules:
         default: true
   default:
     # --- hidden in Fokus ---------------------------------------------------
-    - label: "Seitenleiste"
-      selector: ".sidebar-wrapper, .header-sidebar-toggle"
+    # Fokus keeps a slim sidebar: Kategorien + the "Gruppen" link from Community.
+    - label: "Seitenleiste: übrige Bereiche (außer Kategorien/Community)"
+      selector: '.sidebar-section[data-section-name]:not([data-section-name="categories"], [data-section-name="community"])'
+      min_level: "2"
+    - label: "Seitenleiste: Community-Links außer Gruppen"
+      selector: '.sidebar-section[data-section-name="community"] .sidebar-section-link-wrapper:not(:has([data-link-name="groups"])), .sidebar-section[data-section-name="community"] .sidebar-more-section-links-details'
+      min_level: "2"
+    - label: "Seitenleiste: Bereichs-Buttons (Bearbeiten …)"
+      selector: ".sidebar-section-header-button, .sidebar-section-header-caret"
+      min_level: "2"
+    - label: "Seitenleiste: Fußzeile"
+      selector: ".sidebar-footer-wrapper"
       min_level: "2"
     - label: "Hamburger-Menü"
       selector: ".d-header-icons .hamburger-dropdown"
@@ -130,12 +140,7 @@ default_rules:
 custom_css_level_1:
   type: string
   textarea: true
-  default: |-
-    /* Seitenleiste ist ausgeblendet: Inhalt über volle Breite */
-    #main-outlet-wrapper {
-      grid-template-columns: minmax(0, 1fr) !important;
-      gap: 0 !important;
-    }
+  default: ""
 
 custom_css_level_2:
   type: string
