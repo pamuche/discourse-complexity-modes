@@ -10,6 +10,14 @@ Adds a switcher next to the account icon (top right) with three UI levels:
 
 Built for treff.syndikat.org (Discourse 2026.1), works on any recent Discourse.
 
+### Messages pages (`/u/<name>/messages/...`)
+
+| Level | Visible |
+|---|---|
+| Fokus | Tabs *Aktuelle* and *Archiv*, notification button, *Neue Unterhaltung* |
+| Standard | plus tabs *Neu* / *Ungelesen* and the profile navigation |
+| Alles | plus profile header (avatar, admin, notes) |
+
 ## Install
 
 Admin → Customize → Themes → Install → *From a git repository* (or upload this

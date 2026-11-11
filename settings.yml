@@ -47,6 +47,12 @@ default_rules:
     - label: "Seitenleiste: Fußzeile"
       selector: ".sidebar-footer-wrapper"
       min_level: "2"
+    - label: "Unterhaltungen: Profil-Navigation"
+      selector: "body.user-messages-page .user-nav"
+      min_level: "2"
+    - label: "Unterhaltungen: Tabs Neu / Ungelesen"
+      selector: '.messages-nav li:is([class$="-new"], [class$="-unread"])'
+      min_level: "2"
     - label: "Hamburger-Menü"
       selector: ".d-header-icons .hamburger-dropdown"
       min_level: "2"
@@ -112,6 +118,9 @@ default_rules:
       min_level: "2"
       enabled: false
     # --- hidden in Fokus + Standard ---------------------------------------
+    - label: "Unterhaltungen: Profilkopf (Avatar, Admin, Notizen)"
+      selector: "body.user-messages-page .user-main > .about, body.user-messages-page section.controls"
+      min_level: "3"
     - label: "Themenliste: Aufrufe & Likes"
       selector: ".topic-list .views, .topic-list .likes, .topic-list .op-likes"
       min_level: "3"
