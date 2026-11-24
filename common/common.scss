@@ -267,11 +267,24 @@ html.complexity-modes-zen {
     font-weight: 300;
     font-style: italic;
     line-height: 1.4;
-    animation: zen-fade 1.8s ease-out both;
   }
 
   &__quote {
     margin: 0;
+
+    // "backwards" so the finished animation doesn't pin opacity and block
+    // the fade-out transition below.
+    animation: zen-fade 1.8s ease-out backwards;
+    transition:
+      opacity 1.2s ease-in-out,
+      transform 1.2s ease-in-out,
+      filter 1.2s ease-in-out;
+
+    &.--fading {
+      opacity: 0;
+      transform: translateY(-0.4rem);
+      filter: blur(3px);
+    }
   }
 
   &__source {
@@ -356,5 +369,6 @@ html.complexity-modes-zen {
   .complexity-modes-zen-overlay,
   .complexity-modes-zen-overlay * {
     animation: none !important;
+    transition: none !important;
   }
 }

@@ -2,10 +2,12 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { on } from "@ember/modifier";
 import { action } from "@ember/object";
+import { cancel } from "@ember/runloop";
 import didInsert from "@ember/render-modifiers/modifiers/did-insert";
 import willDestroy from "@ember/render-modifiers/modifiers/will-destroy";
 import { service } from "@ember/service";
 import { htmlSafe } from "@ember/template";
+import discourseLater from "discourse/lib/later";
 import { i18n } from "discourse-i18n";
 import { pickDifferent } from "../lib/affirmations";
 import {
@@ -47,6 +49,8 @@ function pickNew(key, count) {
 
 const UNICORN_COUNT = 18;
 const ROTATE_MS = 12000;
+// Must match the opacity transition on .complexity-modes-zen-overlay__quote.
+const FADE_MS = 1200;
 
 // One of these is picked on every visit to Zen.
 const PERSONS = [
@@ -84,10 +88,12 @@ export default class ZenOverlay extends Component {
   @service complexityModes;
   @tracked person = PERSONS[0];
   @tracked current;
+  @tracked fading = false;
   @tracked forumItems = [];
 
   unicorns = UNICORNS;
   #timer;
+  #fadeTimer;
   #active = false;
 
   get source() {
@@ -113,18 +119,24 @@ export default class ZenOverlay extends Component {
     return [...this.builtinItems, ...this.forumItems];
   }
 
-  // One-item list keyed by text, so the element is recreated (and the fade
-  // animation replays) whenever the affirmation changes.
-  get affirmations() {
-    return this.current ? [this.current] : [];
-  }
-
+  // Crossfade: fade the current text out, swap it, fade the new one in.
   #next(pool = this.pool) {
     const item = pickDifferent(pool, recall(LAST_AFFIRMATION_KEY));
-    if (item) {
-      this.current = item;
-      remember(LAST_AFFIRMATION_KEY, item.text);
+    if (!item) {
+      return;
     }
+    remember(LAST_AFFIRMATION_KEY, item.text);
+
+    cancel(this.#fadeTimer);
+    if (!this.current) {
+      this.current = item;
+      return;
+    }
+    this.fading = true;
+    this.#fadeTimer = discourseLater(() => {
+      this.current = item;
+      this.fading = false;
+    }, FADE_MS);
   }
 
   async #loadForum() {
@@ -143,6 +155,8 @@ export default class ZenOverlay extends Component {
   start(element) {
     this.#active = true;
     this.person = PERSONS[pickNew(LAST_PERSON_KEY, PERSONS.length)];
+    this.current = undefined;
+    this.fading = false;
     this.#next();
     element.focus();
     document.addEventListener("keydown", this.onKey);
@@ -157,6 +171,7 @@ export default class ZenOverlay extends Component {
     this.#active = false;
     document.removeEventListener("keydown", this.onKey);
     clearInterval(this.#timer);
+    cancel(this.#fadeTimer);
   }
 
   @action
@@ -196,19 +211,23 @@ export default class ZenOverlay extends Component {
             <span class="complexity-modes-zen-overlay__aura"></span>
             {{this.person}}
           </div>
-          {{#each this.affirmations key="text" as |item|}}
-            <figure class="complexity-modes-zen-overlay__quote">
+          {{#if this.current}}
+            <figure
+              class="complexity-modes-zen-overlay__quote
+                {{if this.fading '--fading'}}"
+              aria-live="polite"
+            >
               <p class="complexity-modes-zen-overlay__affirmation">
-                {{item.text}}
+                {{this.current.text}}
               </p>
-              {{#if item.url}}
+              {{#if this.current.url}}
                 <figcaption class="complexity-modes-zen-overlay__source">
                   {{i18n (themePrefix "complexity_modes.zen.from")}}
-                  <a href={{item.url}}>{{item.title}}</a>
+                  <a href={{this.current.url}}>{{this.current.title}}</a>
                 </figcaption>
               {{/if}}
             </figure>
-          {{/each}}
+          {{/if}}
         </div>
         <button
           type="button"
