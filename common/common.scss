@@ -231,10 +231,13 @@ html.complexity-modes-zen {
     animation-iteration-count: infinite;
   }
 
+  // Only the person is centered (a bit above the middle, leaving room for
+  // the text). The text hangs below it, so its line count never moves the
+  // person.
   &__center {
     position: relative;
+    margin-top: -20vh;
     text-align: center;
-    padding: 2rem;
   }
 
   &__person {
@@ -270,7 +273,11 @@ html.complexity-modes-zen {
   }
 
   &__quote {
-    margin: 0;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: min(32rem, 90vw);
+    margin: 0 0 0 calc(min(32rem, 90vw) / -2);
 
     // "backwards" so the finished animation doesn't pin opacity and block
     // the fade-out transition below.
