@@ -35,8 +35,15 @@ export default class ZenOverlay extends Component {
   unicorns = UNICORNS;
   #timer;
 
-  get affirmation() {
-    return i18n(themePrefix(`complexity_modes.zen.a${this.index + 1}`));
+  // One-item list keyed by index, so the element is recreated (and the fade
+  // animation replays) whenever the affirmation changes.
+  get affirmations() {
+    return [
+      {
+        id: this.index,
+        text: i18n(themePrefix(`complexity_modes.zen.a${this.index + 1}`)),
+      },
+    ];
   }
 
   @action
@@ -91,11 +98,11 @@ export default class ZenOverlay extends Component {
             <span class="complexity-modes-zen-overlay__aura"></span>
             🧘
           </div>
-          {{#key this.index}}
+          {{#each this.affirmations key="id" as |item|}}
             <p class="complexity-modes-zen-overlay__affirmation">
-              {{this.affirmation}}
+              {{item.text}}
             </p>
-          {{/key}}
+          {{/each}}
         </div>
         <button
           type="button"
