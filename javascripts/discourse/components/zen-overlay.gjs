@@ -9,6 +9,23 @@ import { htmlSafe } from "@ember/template";
 import { i18n } from "discourse-i18n";
 
 const AFFIRMATION_COUNT = 8;
+const LAST_KEY = "complexity-modes:zen-affirmation";
+
+// Random affirmation that differs from the one shown last time (also across
+// reloads), so every visit to Zen starts with a new one.
+function nextAffirmation() {
+  let last = -1;
+  try {
+    last = parseInt(window.localStorage.getItem(LAST_KEY), 10);
+  } catch {
+    // storage unavailable
+  }
+  let next = Math.floor(Math.random() * (AFFIRMATION_COUNT - 1));
+  if (next >= last && last >= 0) {
+    next += 1;
+  }
+  return next;
+}
 const UNICORN_COUNT = 18;
 const ROTATE_MS = 12000;
 
@@ -46,7 +63,7 @@ const UNICORNS = Array.from({ length: UNICORN_COUNT }, (_, i) => {
 
 export default class ZenOverlay extends Component {
   @service complexityModes;
-  @tracked index = Math.floor(Math.random() * AFFIRMATION_COUNT);
+  @tracked index = 0;
 
   unicorns = UNICORNS;
   person = PERSONS[Math.floor(Math.random() * PERSONS.length)];
@@ -65,11 +82,21 @@ export default class ZenOverlay extends Component {
 
   @action
   start(element) {
+    this.#show(nextAffirmation());
     element.focus();
     document.addEventListener("keydown", this.onKey);
     this.#timer = setInterval(() => {
-      this.index = (this.index + 1) % AFFIRMATION_COUNT;
+      this.#show((this.index + 1) % AFFIRMATION_COUNT);
     }, ROTATE_MS);
+  }
+
+  #show(index) {
+    this.index = index;
+    try {
+      window.localStorage.setItem(LAST_KEY, String(index));
+    } catch {
+      // storage unavailable
+    }
   }
 
   @action
