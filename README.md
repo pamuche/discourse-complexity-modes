@@ -7,6 +7,9 @@ Adds a switcher next to the account icon (top right) with three UI levels:
 | 1 | **Fokus** | Topic lists, reading, replying, new topic. Slim sidebar (categories, group inboxes), no dropdowns, timeline, extra buttons. |
 | 2 | **Standard** | Plus full sidebar, navigation dropdowns, search, post/topic extras. |
 | 3 | **Alles** | Stock Discourse, nothing hidden. |
+| – | **Zen** | Nothing of the forum: a full-screen German affirmation, a meditating person (different on every visit) and slowly falling unicorns. Remembered across reloads; leave with Esc, a click, or by picking a level. |
+
+In the menu the entries are listed from most to least: Alles, Standard, Fokus, Zen.
 
 Built for treff.syndikat.org (Discourse 2026.1), works on any recent Discourse.
 

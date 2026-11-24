@@ -7,7 +7,6 @@ import DButton from "discourse/components/d-button";
 import DropdownMenu from "discourse/components/dropdown-menu";
 import concatClass from "discourse/helpers/concat-class";
 import DMenu from "discourse/float-kit/components/d-menu";
-import { eq } from "discourse/truth-helpers";
 import { i18n } from "discourse-i18n";
 import { LEVEL_KEYS, SWITCHER_CLASS } from "../lib/rules";
 import ComplexityConfigModal from "./complexity-config-modal";
@@ -20,15 +19,25 @@ export default class ComplexitySwitcher extends Component {
 
   switcherClass = SWITCHER_CLASS;
 
+  // Most to least: Alles, Standard, Fokus, then Zen.
   get levels() {
-    return [1, 2, 3].map((level) => ({
+    return [3, 2, 1].map((level) => ({
       level,
       icon: ICONS[level],
+      current:
+        !this.complexityModes.zen && level === this.complexityModes.level,
       label: i18n(themePrefix(`complexity_modes.levels.${LEVEL_KEYS[level]}`)),
       description: i18n(
         themePrefix(`complexity_modes.descriptions.${LEVEL_KEYS[level]}`)
       ),
     }));
+  }
+
+  get zenItem() {
+    return {
+      label: i18n(themePrefix("complexity_modes.zen.enter")),
+      description: i18n(themePrefix("complexity_modes.zen.description")),
+    };
   }
 
   get currentIcon() {
@@ -87,8 +96,9 @@ export default class ComplexitySwitcher extends Component {
                 <DButton
                   class={{concatClass
                     "btn-transparent complexity-modes-menu__level"
-                    (if (eq item.level this.complexityModes.level) "--current")
+                    (if item.current "--current")
                   }}
+                  data-level={{item.level}}
                   @icon={{item.icon}}
                   @action={{fn this.select item.level dMenu}}
                 >
@@ -103,16 +113,28 @@ export default class ComplexitySwitcher extends Component {
                 </DButton>
               </dropdown.item>
             {{/each}}
-            <dropdown.divider />
             <dropdown.item>
               <DButton
-                class="btn-transparent complexity-modes-menu__zen"
-                @icon="spa"
-                @translatedLabel={{i18n
-                  (themePrefix "complexity_modes.zen.enter")
+                class={{concatClass
+                  "btn-transparent complexity-modes-menu__level complexity-modes-menu__zen"
+                  (if this.complexityModes.zen "--current")
                 }}
+                data-level="zen"
                 @action={{fn this.enterZen dMenu}}
-              />
+              >
+                <span
+                  class="complexity-modes-menu__emoji"
+                  aria-hidden="true"
+                >🧘</span>
+                <span class="complexity-modes-menu__text">
+                  <span class="complexity-modes-menu__label">
+                    {{this.zenItem.label}}
+                  </span>
+                  <span class="complexity-modes-menu__description">
+                    {{this.zenItem.description}}
+                  </span>
+                </span>
+              </DButton>
             </dropdown.item>
             {{#if this.complexityModes.allowCustomization}}
               <dropdown.divider />

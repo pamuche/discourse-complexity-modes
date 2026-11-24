@@ -11,7 +11,8 @@ de:
       custom_css_level_3: "Zusätzliches CSS, das nur in Alles gilt."
   complexity_modes:
     zen:
-      enter: "Zen-Modus"
+      description: "Nur Ruhe, eine Affirmation und Einhörner"
+      enter: "Zen"
       exit: "Zurück zum Forum"
       hint: "Esc oder Klick zum Beenden"
       a1: "Ich bin genau da, wo ich sein soll."

@@ -12,6 +12,7 @@ import {
 } from "../lib/rules";
 
 const STYLE_ID = "complexity-modes-css";
+const ZEN_KEY = "complexity-modes:zen";
 
 export default class ComplexityModesService extends Service {
   @tracked level;
@@ -24,6 +25,7 @@ export default class ComplexityModesService extends Service {
     super(...arguments);
     this.#load();
     this.apply();
+    this.setZen(this.#readZen());
   }
 
   get allowCustomization() {
@@ -43,14 +45,34 @@ export default class ComplexityModesService extends Service {
   }
 
   setLevel(level) {
+    this.setZen(false);
     this.level = clampLevel(level, this.level);
     this.#applyLevel();
     this.#persist();
   }
 
+  // Zen sits on top of the levels: it hides the whole forum behind a calm
+  // overlay and is remembered across reloads until a level is picked.
   setZen(on) {
     this.zen = !!on;
     document.documentElement.classList.toggle("complexity-modes-zen", this.zen);
+    try {
+      if (this.zen) {
+        window.localStorage.setItem(ZEN_KEY, "1");
+      } else {
+        window.localStorage.removeItem(ZEN_KEY);
+      }
+    } catch {
+      // storage unavailable - zen just won't survive a reload
+    }
+  }
+
+  #readZen() {
+    try {
+      return window.localStorage.getItem(ZEN_KEY) === "1";
+    } catch {
+      return false;
+    }
   }
 
   // Applies the given (draft) rules without saving them, for live preview.

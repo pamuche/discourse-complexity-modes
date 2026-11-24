@@ -11,7 +11,8 @@ en:
       custom_css_level_3: "Extra CSS applied only in Full."
   complexity_modes:
     zen:
-      enter: "Zen mode"
+      description: "Just calm, an affirmation and unicorns"
+      enter: "Zen"
       exit: "Back to the forum"
       hint: "Esc or click to leave"
       a1: "I am exactly where I need to be."

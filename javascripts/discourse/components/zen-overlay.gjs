@@ -12,6 +12,22 @@ const AFFIRMATION_COUNT = 8;
 const UNICORN_COUNT = 18;
 const ROTATE_MS = 12000;
 
+// A different meditating person on every visit.
+const PERSONS = [
+  "🧘",
+  "🧘‍♀️",
+  "🧘‍♂️",
+  "🧘🏻",
+  "🧘🏼‍♀️",
+  "🧘🏽‍♂️",
+  "🧘🏾",
+  "🧘🏿‍♀️",
+  "🧘🏻‍♂️",
+  "🧘🏽‍♀️",
+  "🧘🏾‍♂️",
+  "🧘🏿",
+];
+
 // Fixed pseudo-random layout so the scene is calm and identical each time.
 const UNICORNS = Array.from({ length: UNICORN_COUNT }, (_, i) => {
   const left = (i * 37 + 11) % 100;
@@ -33,6 +49,7 @@ export default class ZenOverlay extends Component {
   @tracked index = Math.floor(Math.random() * AFFIRMATION_COUNT);
 
   unicorns = UNICORNS;
+  person = PERSONS[Math.floor(Math.random() * PERSONS.length)];
   #timer;
 
   // One-item list keyed by index, so the element is recreated (and the fade
@@ -96,7 +113,7 @@ export default class ZenOverlay extends Component {
         <div class="complexity-modes-zen-overlay__center">
           <div class="complexity-modes-zen-overlay__person" aria-hidden="true">
             <span class="complexity-modes-zen-overlay__aura"></span>
-            🧘
+            {{this.person}}
           </div>
           {{#each this.affirmations key="id" as |item|}}
             <p class="complexity-modes-zen-overlay__affirmation">

@@ -33,7 +33,7 @@ acceptance("Complexity modes | logged in", function (needs) {
   test("switching level updates <html> and persists", async function (assert) {
     await visit("/");
     await click(".complexity-modes-trigger");
-    await click(".complexity-modes-menu__level:first-of-type");
+    await click(".complexity-modes-menu__level[data-level='1']");
     assert.strictEqual(level(), "1");
     assert.dom(document.body).hasClass("complexity-level-1");
     assert.strictEqual(JSON.parse(localStorage.getItem(STORAGE_KEY)).level, 1);
@@ -59,6 +59,7 @@ acceptance("Complexity modes | logged in", function (needs) {
     await click(".complexity-modes-menu__zen");
     assert.dom(".complexity-modes-zen-overlay").exists();
     assert.dom(".complexity-modes-zen-overlay__affirmation").hasAnyText();
+    assert.strictEqual(localStorage.getItem("complexity-modes:zen"), "1");
     await click(".complexity-modes-zen-overlay__exit");
     assert.dom(".complexity-modes-zen-overlay").doesNotExist();
   });
