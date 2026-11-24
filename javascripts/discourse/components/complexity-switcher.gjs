@@ -55,6 +55,12 @@ export default class ComplexitySwitcher extends Component {
   }
 
   @action
+  enterZen(dMenu) {
+    dMenu.close();
+    this.complexityModes.setZen(true);
+  }
+
+  @action
   openConfig(dMenu) {
     dMenu.close();
     this.modal.show(ComplexityConfigModal);
@@ -97,6 +103,17 @@ export default class ComplexitySwitcher extends Component {
                 </DButton>
               </dropdown.item>
             {{/each}}
+            <dropdown.divider />
+            <dropdown.item>
+              <DButton
+                class="btn-transparent complexity-modes-menu__zen"
+                @icon="spa"
+                @translatedLabel={{i18n
+                  (themePrefix "complexity_modes.zen.enter")
+                }}
+                @action={{fn this.enterZen dMenu}}
+              />
+            </dropdown.item>
             {{#if this.complexityModes.allowCustomization}}
               <dropdown.divider />
               <dropdown.item>

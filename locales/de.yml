@@ -10,6 +10,18 @@ de:
       custom_css_level_2: "Zusätzliches CSS, das nur in Standard gilt."
       custom_css_level_3: "Zusätzliches CSS, das nur in Alles gilt."
   complexity_modes:
+    zen:
+      enter: "Zen-Modus"
+      exit: "Zurück zum Forum"
+      hint: "Esc oder Klick zum Beenden"
+      a1: "Ich bin genau da, wo ich sein soll."
+      a2: "Ich atme ein – und lasse los."
+      a3: "Ich darf mir Zeit nehmen."
+      a4: "Ich bin genug, so wie ich bin."
+      a5: "Alles darf langsam sein."
+      a6: "Mein Atem trägt mich."
+      a7: "Ich bin freundlich zu mir selbst."
+      a8: "In mir ist Ruhe."
     switcher_title: "Ansicht: %{level}"
     customize: "Anpassen …"
     levels:

@@ -10,6 +10,18 @@ en:
       custom_css_level_2: "Extra CSS applied only in Standard."
       custom_css_level_3: "Extra CSS applied only in Full."
   complexity_modes:
+    zen:
+      enter: "Zen mode"
+      exit: "Back to the forum"
+      hint: "Esc or click to leave"
+      a1: "I am exactly where I need to be."
+      a2: "I breathe in – and let go."
+      a3: "I may take my time."
+      a4: "I am enough, just as I am."
+      a5: "Everything may be slow."
+      a6: "My breath carries me."
+      a7: "I am kind to myself."
+      a8: "There is calm within me."
     switcher_title: "View: %{level}"
     customize: "Customize …"
     levels:

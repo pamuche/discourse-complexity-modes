@@ -18,6 +18,7 @@ export default class ComplexityModesService extends Service {
   @tracked rules;
   @tracked customCss;
   @tracked hasOverride = false;
+  @tracked zen = false;
 
   constructor() {
     super(...arguments);
@@ -45,6 +46,11 @@ export default class ComplexityModesService extends Service {
     this.level = clampLevel(level, this.level);
     this.#applyLevel();
     this.#persist();
+  }
+
+  setZen(on) {
+    this.zen = !!on;
+    document.documentElement.classList.toggle("complexity-modes-zen", this.zen);
   }
 
   // Applies the given (draft) rules without saving them, for live preview.

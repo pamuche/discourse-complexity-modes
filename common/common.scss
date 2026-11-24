@@ -188,3 +188,151 @@ html.complexity-modes-picking {
   outline: 2px solid var(--tertiary);
   background: rgb(var(--tertiary-rgb), 0.15);
 }
+
+// Zen mode: full-screen calm overlay
+html.complexity-modes-zen {
+  overflow: hidden;
+}
+
+.complexity-modes-zen-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  color: #4a3f6b;
+  background: linear-gradient(160deg, #fde2f3 0%, #e4dcff 45%, #cfeefc 100%);
+  background-size: 200% 200%;
+  animation: zen-gradient 30s ease-in-out infinite alternate;
+  outline: none;
+
+  &__sky {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  &__unicorn {
+    position: absolute;
+    top: -3rem;
+    opacity: 0.75;
+    animation-name: zen-fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  &__center {
+    position: relative;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  &__person {
+    position: relative;
+    font-size: 7rem;
+    line-height: 1;
+    animation: zen-breathe 8s ease-in-out infinite;
+  }
+
+  &__aura {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 11rem;
+    height: 11rem;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgb(255 255 255 / 0.8),
+      transparent 70%
+    );
+    transform: translate(-50%, -50%);
+    z-index: -1;
+  }
+
+  &__affirmation {
+    margin: 2rem auto 0;
+    max-width: 32rem;
+    font-size: 2rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.4;
+    animation: zen-fade 1.8s ease-out both;
+  }
+
+  &__exit {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid rgb(74 63 107 / 0.3);
+    border-radius: 2rem;
+    background: rgb(255 255 255 / 0.5);
+    color: inherit;
+    cursor: pointer;
+  }
+
+  &__hint {
+    position: absolute;
+    bottom: 1rem;
+    font-size: var(--font-down-1);
+    opacity: 0.6;
+  }
+}
+
+@keyframes zen-fall {
+  0% {
+    transform: translate(0, 0) rotate(-10deg);
+  }
+
+  50% {
+    transform: translate(var(--zen-sway), 55vh) rotate(10deg);
+  }
+
+  100% {
+    transform: translate(0, 110vh) rotate(-10deg);
+  }
+}
+
+@keyframes zen-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes zen-fade {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes zen-gradient {
+  from {
+    background-position: 0% 0%;
+  }
+
+  to {
+    background-position: 100% 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .complexity-modes-zen-overlay,
+  .complexity-modes-zen-overlay * {
+    animation: none !important;
+  }
+}

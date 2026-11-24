@@ -53,6 +53,16 @@ acceptance("Complexity modes | logged in", function (needs) {
     assert.false(css.includes('[data-link-name="groups"]'));
   });
 
+  test("zen mode shows the overlay and closes on click", async function (assert) {
+    await visit("/");
+    await click(".complexity-modes-trigger");
+    await click(".complexity-modes-menu__zen");
+    assert.dom(".complexity-modes-zen-overlay").exists();
+    assert.dom(".complexity-modes-zen-overlay__affirmation").hasAnyText();
+    await click(".complexity-modes-zen-overlay__exit");
+    assert.dom(".complexity-modes-zen-overlay").doesNotExist();
+  });
+
   test("never hides the switcher itself", async function (assert) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ version: 1, level: 1 }));
     await visit("/");
