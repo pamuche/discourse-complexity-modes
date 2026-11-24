@@ -9,8 +9,11 @@ de:
       custom_css_level_1: "Zusätzliches CSS, das nur in Fokus gilt."
       custom_css_level_2: "Zusätzliches CSS, das nur in Standard gilt."
       custom_css_level_3: "Zusätzliches CSS, das nur in Alles gilt."
+      zen_affirmation_categories: "Sätze aus diesen Kategorien als Zen-Affirmationen verwenden. Leer = nur die eingebauten Affirmationen."
+      zen_affirmation_source: "Woher die Zen-Affirmationen kommen: builtin = nur eingebaute, posts = nur Sätze aus Beiträgen (eingebaute als Ersatz), mixed = beides."
   complexity_modes:
     zen:
+      from: "— aus:"
       description: "Nur Ruhe, eine Affirmation und Einhörner"
       enter: "Zen"
       exit: "Zurück zum Forum"

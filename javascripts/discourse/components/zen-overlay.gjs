@@ -7,29 +7,48 @@ import willDestroy from "@ember/render-modifiers/modifiers/will-destroy";
 import { service } from "@ember/service";
 import { htmlSafe } from "@ember/template";
 import { i18n } from "discourse-i18n";
+import { pickDifferent } from "../lib/affirmations";
+import {
+  configuredCategoryIds,
+  loadForumAffirmations,
+} from "../lib/forum-affirmations";
 
 const AFFIRMATION_COUNT = 8;
-const LAST_KEY = "complexity-modes:zen-affirmation";
+const LAST_AFFIRMATION_KEY = "complexity-modes:zen-affirmation";
+const LAST_PERSON_KEY = "complexity-modes:zen-person";
 
-// Random affirmation that differs from the one shown last time (also across
-// reloads), so every visit to Zen starts with a new one.
-function nextAffirmation() {
-  let last = -1;
+function remember(key, value) {
   try {
-    last = parseInt(window.localStorage.getItem(LAST_KEY), 10);
+    window.localStorage.setItem(key, String(value));
   } catch {
     // storage unavailable
   }
-  let next = Math.floor(Math.random() * (AFFIRMATION_COUNT - 1));
+}
+
+function recall(key) {
+  try {
+    return window.localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+// Random index in [0, count) that differs from the one stored under `key`
+// (also across reloads), so every visit to Zen looks different.
+function pickNew(key, count) {
+  const last = parseInt(recall(key), 10);
+  let next = Math.floor(Math.random() * (count - 1));
   if (next >= last && last >= 0) {
     next += 1;
   }
+  remember(key, next);
   return next;
 }
+
 const UNICORN_COUNT = 18;
 const ROTATE_MS = 12000;
 
-// A different meditating person on every visit.
+// One of these is picked on every visit to Zen.
 const PERSONS = [
   "🧘",
   "🧘‍♀️",
@@ -63,44 +82,79 @@ const UNICORNS = Array.from({ length: UNICORN_COUNT }, (_, i) => {
 
 export default class ZenOverlay extends Component {
   @service complexityModes;
-  @tracked index = 0;
+  @tracked person = PERSONS[0];
+  @tracked current;
+  @tracked forumItems = [];
 
   unicorns = UNICORNS;
-  person = PERSONS[Math.floor(Math.random() * PERSONS.length)];
   #timer;
+  #active = false;
 
-  // One-item list keyed by index, so the element is recreated (and the fade
+  get source() {
+    return configuredCategoryIds().length
+      ? settings.zen_affirmation_source
+      : "builtin";
+  }
+
+  get builtinItems() {
+    return Array.from({ length: AFFIRMATION_COUNT }, (_, i) => ({
+      text: i18n(themePrefix(`complexity_modes.zen.a${i + 1}`)),
+    }));
+  }
+
+  // Forum sentences when there are any, built-in ones as fallback.
+  get pool() {
+    if (this.source === "builtin" || !this.forumItems.length) {
+      return this.builtinItems;
+    }
+    if (this.source === "posts") {
+      return this.forumItems;
+    }
+    return [...this.builtinItems, ...this.forumItems];
+  }
+
+  // One-item list keyed by text, so the element is recreated (and the fade
   // animation replays) whenever the affirmation changes.
   get affirmations() {
-    return [
-      {
-        id: this.index,
-        text: i18n(themePrefix(`complexity_modes.zen.a${this.index + 1}`)),
-      },
-    ];
+    return this.current ? [this.current] : [];
+  }
+
+  #next(pool = this.pool) {
+    const item = pickDifferent(pool, recall(LAST_AFFIRMATION_KEY));
+    if (item) {
+      this.current = item;
+      remember(LAST_AFFIRMATION_KEY, item.text);
+    }
+  }
+
+  async #loadForum() {
+    const items = await loadForumAffirmations();
+    if (!this.#active || !items.length) {
+      return;
+    }
+    this.forumItems = items;
+    // Swap the built-in placeholder for a forum sentence right away.
+    if (this.source === "posts" || Math.random() < 0.5) {
+      this.#next(items);
+    }
   }
 
   @action
   start(element) {
-    this.#show(nextAffirmation());
+    this.#active = true;
+    this.person = PERSONS[pickNew(LAST_PERSON_KEY, PERSONS.length)];
+    this.#next();
     element.focus();
     document.addEventListener("keydown", this.onKey);
-    this.#timer = setInterval(() => {
-      this.#show((this.index + 1) % AFFIRMATION_COUNT);
-    }, ROTATE_MS);
-  }
-
-  #show(index) {
-    this.index = index;
-    try {
-      window.localStorage.setItem(LAST_KEY, String(index));
-    } catch {
-      // storage unavailable
+    this.#timer = setInterval(() => this.#next(), ROTATE_MS);
+    if (this.source !== "builtin") {
+      this.#loadForum();
     }
   }
 
   @action
   stop() {
+    this.#active = false;
     document.removeEventListener("keydown", this.onKey);
     clearInterval(this.#timer);
   }
@@ -142,10 +196,18 @@ export default class ZenOverlay extends Component {
             <span class="complexity-modes-zen-overlay__aura"></span>
             {{this.person}}
           </div>
-          {{#each this.affirmations key="id" as |item|}}
-            <p class="complexity-modes-zen-overlay__affirmation">
-              {{item.text}}
-            </p>
+          {{#each this.affirmations key="text" as |item|}}
+            <figure class="complexity-modes-zen-overlay__quote">
+              <p class="complexity-modes-zen-overlay__affirmation">
+                {{item.text}}
+              </p>
+              {{#if item.url}}
+                <figcaption class="complexity-modes-zen-overlay__source">
+                  {{i18n (themePrefix "complexity_modes.zen.from")}}
+                  <a href={{item.url}}>{{item.title}}</a>
+                </figcaption>
+              {{/if}}
+            </figure>
           {{/each}}
         </div>
         <button

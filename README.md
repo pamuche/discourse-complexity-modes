@@ -9,6 +9,12 @@ Adds a switcher next to the account icon (top right) with three UI levels:
 | 3 | **Alles** | Stock Discourse, nothing hidden. |
 | – | **Zen** | Nothing of the forum: a full-screen German affirmation, a meditating person (different on every visit) and slowly falling unicorns. Remembered across reloads; leave with Esc, a click, or by picking a level. |
 
+Zen affirmations can also come from the forum: pick categories in the setting
+`zen_affirmation_categories`, and Zen shows single sentences from recent posts there
+(with a link to the post). `zen_affirmation_source` chooses `builtin`, `posts` or `mixed`.
+Only calm-looking sentences are used (no questions, links, mentions, quotes or code),
+and the built-in affirmations are the fallback.
+
 In the menu the entries are listed from most to least: Alles, Standard, Fokus, Zen.
 
 Built for treff.syndikat.org (Discourse 2026.1), works on any recent Discourse.

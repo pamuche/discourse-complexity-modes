@@ -1,8 +1,9 @@
 // In-browser acceptance tests. They run inside Discourse core:
 //   - local dev Discourse:  http://localhost:4200/theme-qunit
 //   - or:  discourse_theme rspec / bin/rake themes:qunit[name,"Komplexitätsstufen (Complexity Modes)"]
-import { click, visit } from "@ember/test-helpers";
+import { click, settled, visit } from "@ember/test-helpers";
 import { test } from "qunit";
+import pretender, { response } from "discourse/tests/helpers/create-pretender";
 import { acceptance } from "discourse/tests/helpers/qunit-helpers";
 
 const STORAGE_KEY = "complexity-modes:v1";
@@ -62,6 +63,48 @@ acceptance("Complexity modes | logged in", function (needs) {
     assert.strictEqual(localStorage.getItem("complexity-modes:zen"), "1");
     await click(".complexity-modes-zen-overlay__exit");
     assert.dom(".complexity-modes-zen-overlay").doesNotExist();
+  });
+
+  test("zen shows a sentence from a post in the selected categories", async function (assert) {
+    settings.zen_affirmation_categories = "1";
+    settings.zen_affirmation_source = "posts";
+    sessionStorage.removeItem("complexity-modes:zen-forum");
+    pretender.get("/c/1/l/latest.json", () =>
+      response({ topic_list: { topics: [{ id: 4242, visible: true }] } })
+    );
+    pretender.get("/t/4242.json", () =>
+      response({
+        id: 4242,
+        slug: "ruhe",
+        title: "Ruhe finden",
+        post_stream: {
+          posts: [
+            {
+              post_number: 1,
+              post_type: 1,
+              cooked:
+                "<p>Es tut gut, Teil dieser Gemeinschaft zu sein.</p><blockquote>Zitat wird ignoriert und nie gezeigt.</blockquote>",
+            },
+          ],
+        },
+      })
+    );
+
+    await visit("/");
+    await click(".complexity-modes-trigger");
+    await click(".complexity-modes-menu__zen");
+    await settled();
+
+    assert
+      .dom(".complexity-modes-zen-overlay__affirmation")
+      .hasText("Es tut gut, Teil dieser Gemeinschaft zu sein.");
+    assert
+      .dom(".complexity-modes-zen-overlay__source a")
+      .hasAttribute("href", "/t/ruhe/4242/1");
+
+    settings.zen_affirmation_categories = "";
+    settings.zen_affirmation_source = "mixed";
+    await click(".complexity-modes-zen-overlay__exit");
   });
 
   test("never hides the switcher itself", async function (assert) {

@@ -157,3 +157,18 @@ custom_css_level_3:
   type: string
   textarea: true
   default: ""
+
+# Zen affirmations: take sentences from posts in these categories.
+# Empty = only the built-in affirmations.
+zen_affirmation_categories:
+  type: list
+  list_type: category
+  default: ""
+
+zen_affirmation_source:
+  type: enum
+  default: mixed
+  choices:
+    - builtin
+    - posts
+    - mixed
