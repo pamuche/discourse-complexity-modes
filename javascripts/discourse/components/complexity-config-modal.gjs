@@ -10,6 +10,7 @@ import concatClass from "discourse/helpers/concat-class";
 import { eq } from "discourse/truth-helpers";
 import { i18n } from "discourse-i18n";
 import { pickElement } from "../lib/picker";
+import draggableModal from "../modifiers/draggable-modal";
 import {
   countMatches,
   deserialize,
@@ -231,7 +232,7 @@ export default class ComplexityConfigModal extends Component {
       }}
     >
       <:body>
-        <p class="complexity-modes-config__intro">
+        <p class="complexity-modes-config__intro" {{draggableModal}}>
           {{i18n (themePrefix "complexity_modes.config.intro")}}
         </p>
 
