@@ -63,7 +63,7 @@ default_rules:
       selector: ".chat-header-icon"
       min_level: "2"
     - label: "Kategorie-/Schlagwort-Dropdowns"
-      selector: ".category-breadcrumb"
+      selector: ".category-breadcrumb:not(:has(.messages-dropdown-trigger))"
       min_level: "2"
     - label: "Kategorie-Benachrichtigung & -Bearbeiten"
       selector: ".navigation-controls .category-notifications-button, .navigation-controls .tag-notifications-button, .navigation-controls .edit-category"
