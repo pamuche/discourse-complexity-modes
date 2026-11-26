@@ -52,10 +52,25 @@
   }
 }
 
+// DModal renders the backdrop as a sibling of the modal element.
+.complexity-modes-config + .d-modal__backdrop {
+  opacity: 0.15;
+}
+
 .complexity-modes-config {
   .d-modal__container {
     max-width: 60rem;
     width: 95vw;
+  }
+
+  &__drag-handle {
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+
+    &.--dragging {
+      cursor: grabbing;
+    }
   }
 
   &__intro,
