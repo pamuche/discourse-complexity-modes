@@ -7,7 +7,7 @@ Adds a switcher next to the account icon (top right) with three UI levels:
 | 1 | **Fokus** | Topic lists, reading, replying, new topic. Slim sidebar (categories, group inboxes), no dropdowns, timeline, extra buttons. |
 | 2 | **Standard** | Plus full sidebar, navigation dropdowns, search, post/topic extras. |
 | 3 | **Alles** | Stock Discourse, nothing hidden. |
-| – | **Zen** | Nothing of the forum: a full-screen German affirmation, a meditating person (different on every visit) and slowly falling unicorns. Remembered across reloads; leave with Esc, a click, or by picking a level. |
+| – | **Zen** | Nothing of the forum: a full-screen German affirmation, a meditating person (different on every visit) and slowly falling unicorns. Remembered across reloads; leave with Esc or a click anywhere. |
 
 Zen affirmations can also come from the forum: pick categories in the setting
 `zen_affirmation_categories`, and Zen shows single sentences from recent posts there

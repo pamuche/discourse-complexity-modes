@@ -263,8 +263,13 @@ html.complexity-modes-zen {
     z-index: -1;
   }
 
+  // Hangs below the person, so its line count never moves the person.
   &__affirmation {
-    margin: 2rem auto 0;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: min(32rem, 90vw);
+    margin: 2rem 0 0 calc(min(32rem, 90vw) / -2);
     max-width: 32rem;
     font-size: 2rem;
     font-weight: 300;
@@ -272,13 +277,8 @@ html.complexity-modes-zen {
     line-height: 1.4;
   }
 
-  &__quote {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    width: min(32rem, 90vw);
-    margin: 0 0 0 calc(min(32rem, 90vw) / -2);
-
+  // Text that crossfades when the affirmation changes.
+  &__fade {
     // "backwards" so the finished animation doesn't pin opacity and block
     // the fade-out transition below.
     animation: zen-fade 1.8s ease-out backwards;
@@ -294,34 +294,21 @@ html.complexity-modes-zen {
     }
   }
 
+  // Where a forum sentence comes from, at the bottom of the screen.
   &__source {
-    margin-top: 0.75rem;
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    margin: 0;
+    text-align: center;
     font-size: var(--font-down-1);
-    opacity: 0.7;
+    color: rgb(74 63 107 / 0.7);
 
     a {
       color: inherit;
       text-decoration: underline;
     }
-  }
-
-  &__exit {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    padding: 0.4rem 0.9rem;
-    border: 1px solid rgb(74 63 107 / 0.3);
-    border-radius: 2rem;
-    background: rgb(255 255 255 / 0.5);
-    color: inherit;
-    cursor: pointer;
-  }
-
-  &__hint {
-    position: absolute;
-    bottom: 1rem;
-    font-size: var(--font-down-1);
-    opacity: 0.6;
   }
 }
 

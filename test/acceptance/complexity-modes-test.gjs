@@ -61,7 +61,7 @@ acceptance("Complexity modes | logged in", function (needs) {
     assert.dom(".complexity-modes-zen-overlay").exists();
     assert.dom(".complexity-modes-zen-overlay__affirmation").hasAnyText();
     assert.strictEqual(localStorage.getItem("complexity-modes:zen"), "1");
-    await click(".complexity-modes-zen-overlay__exit");
+    await click(".complexity-modes-zen-overlay");
     assert.dom(".complexity-modes-zen-overlay").doesNotExist();
   });
 
@@ -104,7 +104,7 @@ acceptance("Complexity modes | logged in", function (needs) {
 
     settings.zen_affirmation_categories = "";
     settings.zen_affirmation_source = "mixed";
-    await click(".complexity-modes-zen-overlay__exit");
+    await click(".complexity-modes-zen-overlay");
   });
 
   test("never hides the switcher itself", async function (assert) {

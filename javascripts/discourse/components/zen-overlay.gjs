@@ -49,7 +49,7 @@ function pickNew(key, count) {
 
 const UNICORN_COUNT = 18;
 const ROTATE_MS = 12000;
-// Must match the opacity transition on .complexity-modes-zen-overlay__quote.
+// Must match the opacity transition on .complexity-modes-zen-overlay__fade.
 const FADE_MS = 1200;
 
 // One of these is picked on every visit to Zen.
@@ -212,31 +212,24 @@ export default class ZenOverlay extends Component {
             {{this.person}}
           </div>
           {{#if this.current}}
-            <figure
-              class="complexity-modes-zen-overlay__quote
+            <p
+              class="complexity-modes-zen-overlay__affirmation complexity-modes-zen-overlay__fade
                 {{if this.fading '--fading'}}"
               aria-live="polite"
             >
-              <p class="complexity-modes-zen-overlay__affirmation">
-                {{this.current.text}}
-              </p>
-              {{#if this.current.url}}
-                <figcaption class="complexity-modes-zen-overlay__source">
-                  {{i18n (themePrefix "complexity_modes.zen.from")}}
-                  <a href={{this.current.url}}>{{this.current.title}}</a>
-                </figcaption>
-              {{/if}}
-            </figure>
+              {{this.current.text}}
+            </p>
           {{/if}}
         </div>
-        <button
-          type="button"
-          class="complexity-modes-zen-overlay__exit"
-          {{on "click" this.exit}}
-        >{{i18n (themePrefix "complexity_modes.zen.exit")}}</button>
-        <span class="complexity-modes-zen-overlay__hint">
-          {{i18n (themePrefix "complexity_modes.zen.hint")}}
-        </span>
+        {{#if this.current.url}}
+          <p
+            class="complexity-modes-zen-overlay__source complexity-modes-zen-overlay__fade
+              {{if this.fading '--fading'}}"
+          >
+            {{i18n (themePrefix "complexity_modes.zen.from")}}
+            <a href={{this.current.url}}>{{this.current.title}}</a>
+          </p>
+        {{/if}}
       </div>
     {{/if}}
   </template>
