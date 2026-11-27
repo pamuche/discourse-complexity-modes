@@ -53,9 +53,6 @@ default_rules:
     - label: "Unterhaltungen: Tabs Neu / Ungelesen"
       selector: '.messages-nav li:is([class$="-new"], [class$="-unread"])'
       min_level: "2"
-    - label: "Hamburger-Menü"
-      selector: ".d-header-icons .hamburger-dropdown"
-      min_level: "2"
     - label: "habiDAT App-Menü"
       selector: ".habidat-dropdown"
       min_level: "2"
